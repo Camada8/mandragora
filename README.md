@@ -21,7 +21,7 @@
   </a> -->
 </h1>
 <p align="center">
-  <em><b>Mandragora</b> validation module for <a href="https://github.com/gofiber/fiber">Fiber</a>. Made to ease the development of body, query and path params validation. It is also made to help <a href="https://www.openapis.org/">OpenAPI</a> auto-generation using <a href="https://github.com/jeffemar/Gobiru">Gobiru</a>.</em>
+  <em><b>Mandragora</b> validation module for <a href="https://github.com/gofiber/fiber">Fiber</a>. Made to ease the development of body, query and path params validation. It is also made to help <a href="https://www.openapis.org/">OpenAPI</a> auto-generation using <a href="https://github.com/jeffemart/Gobiru">Gobiru</a>.</em>
 </p>
 
 ---
@@ -34,7 +34,7 @@ Note that from Fiber v3 onwards, this module is not of much use, due to the new 
 
 ## ⚙️ Installation
 
-To install it simply use this command inside your project's folder:
+To install it simply use this command inside your Fiber project folder:
 
 ```bash
 go get -u github.com/Camada8/mandragora

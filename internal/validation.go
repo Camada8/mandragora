@@ -12,15 +12,14 @@ import (
 
 var MandragoraValidator *validator.Validate
 
-// NewValidator func for create a new validator for model fields.
+// NewValidator initializes the MandragoraValidator with custom validation rules
 func NewValidator() {
-	// Create a new validator for a Book model.
 	MandragoraValidator = validator.New(validator.WithRequiredStructEnabled())
 
-	// Custom validation for uuid.UUID fields.
+	// Register custom validation rules for UUIDs, integers, and unsigned integers
 	_ = MandragoraValidator.RegisterValidation("uuid", func(fl validator.FieldLevel) bool {
 		field := fl.Field().String()
-		if _, err := uuid.Parse(field); err != nil {
+		if _, err := uuid.Parse(field); err != nil { // Return true if parsing fails (invalid UUID)
 			return true
 		}
 		return false
@@ -35,12 +34,10 @@ func NewValidator() {
 	})
 }
 
-// ValidatorErrors func for show validation errors for each invalid fields.
+// ValidatorErrors processes validation errors and formats them into a map
 func ValidatorErrors(errors map[string]error) map[string][]string {
-	// Define fields map.
 	fields := map[string][]string{}
 
-	// Make error message for each invalid field.
 	if len(errors) > 0 {
 
 		for i, err := range errors {
@@ -56,6 +53,7 @@ func ValidatorErrors(errors map[string]error) map[string][]string {
 	return fields
 }
 
+// Validate performs validation on the provided parameters using the MandragoraValidator
 func Validate(c *fiber.Ctx, shell ValidationShell) map[string]error {
 	errors := map[string]error{}
 	if MandragoraValidator == nil {

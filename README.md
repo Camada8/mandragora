@@ -61,7 +61,10 @@ func main() {
 	app := fiber.New()
 
 	// Define a POST route for the root path with validation
-	m.SetBodyValidation("/", BodyStruct{})
+	m.AddValidation(m.ValidationConfig{
+		RoutePath: "/",
+		Body:      BodyStruct{},
+	})
 	// Use the WithValidation function to validate the data before the handler executes
 	app.Post("/", m.WithValidation(func(c *fiber.Ctx) error {
 		return c.SendStatus(fiber.StatusOK)

@@ -1,4 +1,4 @@
-module github.com/ErnestoMuniz/mandragora
+module github.com/Camada8/mandragora
 
 go 1.23.4
 

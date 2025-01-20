@@ -1,6 +1,6 @@
 package mandragora
 
-import "github.com/ErnestoMuniz/mandragora/internal"
+import "github.com/Camada8/mandragora/internal"
 
 // Expose validation functions from the internal package
 var GetValidationSets = internal.GetValidationSets

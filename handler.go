@@ -1,10 +1,9 @@
-package internal
+package mandragora
 
 import (
 	"encoding/json"
 
 	"github.com/gofiber/fiber/v2"
-	"github.com/gofiber/fiber/v2/log"
 )
 
 // convertMap converts a map of string keys and values to a map with any type values
@@ -25,7 +24,6 @@ func WithValidation(handler func(c *fiber.Ctx) error) func(c *fiber.Ctx) error {
 			// Validate request body if parameters are defined
 			if len(set.Body.Parameters) > 0 {
 				c.BodyParser(&set.Body.ValidationStruct)
-				log.Infof("%+v", set.Body.ValidationStruct)
 				errors.BodyError = Validate(c, set.Body)
 			}
 			// Validate query parameters

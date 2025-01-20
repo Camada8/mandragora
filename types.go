@@ -1,12 +1,12 @@
-package internal
+package mandragora
 
 // ValidationConfig holds configuration for request validation
 type ValidationConfig struct {
-	Body BodyConfig
+	Body      any
+	Query     any
+	Params    any
+	RoutePath string
 }
-
-// BodyConfig defines a map for body validation parameters
-type BodyConfig map[string]string
 
 // ValidationSet is a map of validation sets indexed by route paths
 type ValidationSet map[string]Set

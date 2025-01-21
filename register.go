@@ -29,9 +29,12 @@ func AddValidation(config ValidationConfig) {
 }
 
 // processValidation processes the validation for a given data structure
-func processValidation(data interface{}) ValidationShell {
+func processValidation(data any) ValidationShell {
 	t := reflect.TypeOf(data)
 	parameters := make(map[string]string)
+	if t == nil || t.Kind() != reflect.Struct {
+		return ValidationShell{}
+	}
 	for i := 0; i < t.NumField(); i++ {
 		field := t.Field(i)
 

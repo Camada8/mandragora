@@ -7,9 +7,6 @@ type ValidationConfig struct {
 	Params any
 }
 
-// ValidationSet is a map of validation sets indexed by route paths
-type ValidationSet map[string]Set
-
 // ValidationShell contains the structure and parameters for validation
 type ValidationShell struct {
 	ValidationStruct map[string]any

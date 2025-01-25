@@ -26,12 +26,6 @@
 
 ---
 
-## ⚠️ **Attention**
-
-Note that from Fiber v3 onwards, this module is not of much use, due to the new <a href="https://docs.gofiber.io/next/api/bind">Bind</a> feature! 🚀
-
----
-
 ## ⚙️ Installation
 
 To install it simply use this command inside your Fiber project folder:
@@ -60,15 +54,12 @@ type BodyStruct struct {
 func main() {
 	app := fiber.New()
 
-	// Define a POST route for the root path with validation
-	m.AddValidation(m.ValidationConfig{
-		RoutePath: "/",
+	// Use the WithValidation middleware to validate the data before the handler executes
+	app.Post("/", m.WithValidation(m.ValidationConfig{
 		Body:      BodyStruct{},
-	})
-	// Use the WithValidation function to validate the data before the handler executes
-	app.Post("/", m.WithValidation(func(c *fiber.Ctx) error {
+	}), func(c *fiber.Ctx) error {
 		return c.SendStatus(fiber.StatusOK)
-	}))
+	})
 
 	// Log the current validation sets for debugging
 	log.Debug(m.GetValidationSets())

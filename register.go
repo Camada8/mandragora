@@ -2,30 +2,13 @@ package mandragora
 
 import "reflect"
 
-// Global variable to hold validation sets
-var ValidationSets = make(ValidationSet)
-
-// GetValidationSet retrieves a validation set for a given path
-func GetValidationSet(path string) Set {
-	return ValidationSets[path]
-}
-
-// GetValidationSets returns all validation sets
-func GetValidationSets() ValidationSet {
-	return ValidationSets
-}
-
 // AddValidation adds a new validation set for a specific path and kind
-func AddValidation(config ValidationConfig) {
-	set := ValidationSets[config.RoutePath]
-	set.RoutePath = config.RoutePath
-
-	// Process validation for body, query, and params
-	set.Body = processValidation(config.Body)
-	set.Query = processValidation(config.Query)
-	set.Params = processValidation(config.Params)
-
-	ValidationSets[config.RoutePath] = set
+func AddValidation(config ValidationConfig) Set {
+	return Set{
+		Body:   processValidation(config.Body),
+		Query:  processValidation(config.Query),
+		Params: processValidation(config.Params),
+	}
 }
 
 // processValidation processes the validation for a given data structure

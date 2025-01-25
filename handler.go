@@ -16,41 +16,39 @@ func convertMap(input map[string]string) map[string]any {
 }
 
 // WithValidation wraps a Fiber handler to include validation logic
-func WithValidation(handler func(c *fiber.Ctx) error) func(c *fiber.Ctx) error {
+func WithValidation(config ValidationConfig) fiber.Handler {
 	return func(c *fiber.Ctx) error {
-		set := GetValidationSet(c.Route().Path)
+		set := AddValidation(config)
 		var errors ErrorSet
-		if set.RoutePath != "" {
-			// Validate request body if parameters are defined
-			if len(set.Body.Parameters) > 0 {
-				c.BodyParser(&set.Body.ValidationStruct)
-				errors.BodyError = Validate(c, set.Body)
-			}
-			// Validate query parameters
-			if len(set.Query.Parameters) > 0 {
-				set.Query.ValidationStruct = convertMap(c.Queries())
-				errors.QueryError = Validate(c, set.Query)
-			}
-			// Validate path parameters
-			if len(set.Params.Parameters) > 0 {
-				set.Params.ValidationStruct = convertMap(c.AllParams())
-				errors.ParamsError = Validate(c, set.Params)
-			}
-			// If there are validation errors, respond with a bad request
-			if len(errors.BodyError) > 0 || len(errors.QueryError) > 0 || len(errors.ParamsError) > 0 {
-				c.Status(fiber.StatusBadRequest)
-				c.Type("json", "utf-8")
-				j, _ := json.Marshal(fiber.Map{
-					"error": true,
-					"msg": fiber.Map{
-						"body":   ValidatorErrors(errors.BodyError),
-						"query":  ValidatorErrors(errors.QueryError),
-						"params": ValidatorErrors(errors.ParamsError),
-					},
-				})
-				return c.Send(j)
-			}
+		// Validate request body if parameters are defined
+		if len(set.Body.Parameters) > 0 {
+			c.BodyParser(&set.Body.ValidationStruct)
+			errors.BodyError = Validate(c, set.Body)
 		}
-		return handler(c) // Call the original handler if validation passes
+		// Validate query parameters
+		if len(set.Query.Parameters) > 0 {
+			set.Query.ValidationStruct = convertMap(c.Queries())
+			errors.QueryError = Validate(c, set.Query)
+		}
+		// Validate path parameters
+		if len(set.Params.Parameters) > 0 {
+			set.Params.ValidationStruct = convertMap(c.AllParams())
+			errors.ParamsError = Validate(c, set.Params)
+		}
+		// If there are validation errors, respond with a bad request
+		if len(errors.BodyError) > 0 || len(errors.QueryError) > 0 || len(errors.ParamsError) > 0 {
+			c.Status(fiber.StatusBadRequest)
+			c.Type("json", "utf-8")
+			j, _ := json.Marshal(fiber.Map{
+				"error": true,
+				"msg": fiber.Map{
+					"body":   ValidatorErrors(errors.BodyError),
+					"query":  ValidatorErrors(errors.QueryError),
+					"params": ValidatorErrors(errors.ParamsError),
+				},
+			})
+			return c.Send(j)
+		}
+		return c.Next()
 	}
 }

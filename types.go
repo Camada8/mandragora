@@ -2,10 +2,9 @@ package mandragora
 
 // ValidationConfig holds configuration for request validation
 type ValidationConfig struct {
-	Body      any
-	Query     any
-	Params    any
-	RoutePath string
+	Body   any
+	Query  any
+	Params any
 }
 
 // ValidationSet is a map of validation sets indexed by route paths
@@ -19,10 +18,9 @@ type ValidationShell struct {
 
 // Set holds validation shells for body, query, and path parameters
 type Set struct {
-	Body      ValidationShell
-	Query     ValidationShell
-	Params    ValidationShell
-	RoutePath string
+	Body   ValidationShell
+	Query  ValidationShell
+	Params ValidationShell
 }
 
 // ErrorSet contains validation errors for body, query, and path parameters

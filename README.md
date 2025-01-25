@@ -10,10 +10,10 @@
   <a href="https://pkg.go.dev/github.com/Camada8/mandragora">
     <img src="https://img.shields.io/badge/%F0%9F%93%9A%20godoc-pkg-00ACD7.svg?color=00ACD7">
   </a>
-  <!-- <a href="https://goreportcard.com/report/github.com/Camada8/mandragora">
+  <a href="https://goreportcard.com/report/github.com/Camada8/mandragora">
     <img src="https://img.shields.io/badge/%F0%9F%93%9D%20goreport-A%2B-75C46B">
   </a>
-  <a href="https://codecov.io/gh/Camada8/mandragora" >
+  <!-- <a href="https://codecov.io/gh/Camada8/mandragora" >
    <img alt="Codecov" src="https://img.shields.io/codecov/c/github/gofiber/fiber?token=3Cr92CwaPQ&logo=codecov&label=codecov">
  </a>
   <a href="https://github.com/Camada8/mandragora/actions?query=workflow%3ATest">
